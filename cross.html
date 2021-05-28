@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            cursor:url('cursor.png'), auto;
+        }
+        
+        .btn-light
+        {
+            width: 40px;
+        }
+        .fa-star
+        {
+            color: red;
+        }
+        .footer{
+            position: fixed;
+            bottom: 0px;
+        }
+        #win
+        {
+            padding-top: 40vh;
+        }
+    </style>
+
+    
+
+    <div class="container text-center" id="win" style="display: none;">
+        <h1 class="display-6 text-uppercase"  id="stmt"></h1>
+        <button class="btn btn-success" onclick="location.reload();">PLAY AGAIN</button>
+    </div>
+
+
+    <div class="container mx-auto" id="playarea">
+        
+        <div class="col-md-12 bg-info text-center p-4 mx-auto">
+            <h1 class="display-4 text-primary">GUESS</h1>
+            <div class="question p-4">
+                <p class="lead text-light">What is the associative property applicable to?</p>
+            </div>
+
+            <div class="answer m-4" style="display:block;height : 30px">
+               <p class="lead text-light" style="letter-spacing: 5px;" id="ans"></p>
+            </div>
+            
+            <div class="col-md-8 mx-auto">
+               
+                <button class="btn btn-light m-2" id="A" onclick="btnpressed(this.id)">A</button>
+                <button class="btn btn-light m-2" id="B" onclick="btnpressed(this.id)">B</button>
+                <button class="btn btn-light m-2" id="C" onclick="btnpressed(this.id)">C</button>
+                <button class="btn btn-light m-2" id="D" onclick="btnpressed(this.id)">D</button>
+                <button class="btn btn-light m-2" id="E" onclick="btnpressed(this.id)">E</button>
+                <button class="btn btn-light m-2" id="F" onclick="btnpressed(this.id)">F</button>
+                <button class="btn btn-light m-2" id="G" onclick="btnpressed(this.id)">G</button>
+                <button class="btn btn-light m-2" id="H" onclick="btnpressed(this.id)">H</button>
+                <button class="btn btn-light m-2" id="I" onclick="btnpressed(this.id)">I</button>
+                <button class="btn btn-light m-2" id="J" onclick="btnpressed(this.id)">J</button>
+                <button class="btn btn-light m-2" id="K" onclick="btnpressed(this.id)">K</button>
+                <button class="btn btn-light m-2" id="L" onclick="btnpressed(this.id)">L</button>
+                <button class="btn btn-light m-2" id="M" onclick="btnpressed(this.id)">M</button>
+                <button class="btn btn-light m-2" id="N" onclick="btnpressed(this.id)">N</button>
+                <button class="btn btn-light m-2" id="O" onclick="btnpressed(this.id)">O</button>
+                <button class="btn btn-light m-2" id="P" onclick="btnpressed(this.id)">P</button>
+                <button class="btn btn-light m-2" id="Q" onclick="btnpressed(this.id)">Q</button>
+                <button class="btn btn-light m-2" id="R" onclick="btnpressed(this.id)">R</button>
+                <button class="btn btn-light m-2" id="S" onclick="btnpressed(this.id)">S</button>
+                <button class="btn btn-light m-2" id="T" onclick="btnpressed(this.id)">T</button>
+                <button class="btn btn-light m-2" id="U" onclick="btnpressed(this.id)">U</button>
+                <button class="btn btn-light m-2" id="V" onclick="btnpressed(this.id)">V</button>
+                <button class="btn btn-light m-2" id="W" onclick="btnpressed(this.id)">W</button>
+                <button class="btn btn-light m-2" id="X" onclick="btnpressed(this.id)">X</button>
+                <button class="btn btn-light m-2" id="Y" onclick="btnpressed(this.id)">Y</button>
+                <button class="btn btn-light m-2" id="Z" onclick="btnpressed(this.id)">Z</button>
+                
+            </div>
+        </div>  
+        <div class="container bg-warning p-4 d-flex justify-content-between">
+            <div>
+                Life :
+                <i class="fa fa-star" id="star1"></i>
+                <i class="fa fa-star" id="star2"></i>
+                <i class="fa fa-star" id="star3"></i>
+            </div>
+            <button class="btn btn-primary" onclick="location.reload();">New Game</button>
+        </div>
+    </div>
+
+    <div class="footer text-center container-fluid text-secondary">
+        &copy; Make it Simple
+    </div>
+
+</body>
+<script>
+    var ans = 'ADDITION';
+    var btnselected = '';
+    life = 3;
+    function btnpressed(id)
+    {
+        document.getElementById(id).disabled = true;
+        if(check(id))
+        {
+            filterletter(id);
+        }
+        else 
+        {
+            life--; 
+            document.getElementById("star"+(life+1)).style.color = 'black';
+            if(life == 0)
+            {
+                winlose('you lost');
+                //alert('you lost');
+            }
+        }
+    }
+    function filterletter(letter)
+    {
+
+        var current = '';
+        btnselected += letter; 
+        console.log(btnselected);
+        for(let c of ans)
+        {
+            console.log(btnselected.search(c));
+            if(btnselected.indexOf(c) != -1)
+            {
+                current += c;
+            }
+            else
+            {
+                current += '_';
+            }
+            if(current == ans)
+            {
+                document.getElementById('ans').innerHTML = current;
+                winlose('you win');
+                //alert('you win');
+            }
+        }
+        console.log(btnselected);
+        document.getElementById('ans').innerHTML = current;
+    }
+    function check(letter)
+    {
+        return ans.indexOf(letter) != -1;
+    }
+    function winlose(res)
+    {
+        document.getElementById('playarea').style.display = 'none';
+        document.getElementById('win').style.display = '';
+        document.getElementById('stmt').innerHTML = res;
+    }
+</script>
+</html>
